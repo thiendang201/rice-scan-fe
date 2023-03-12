@@ -1,13 +1,15 @@
 import CircleButton from '@/common/components/Button/CircleButton';
 import CameraFocusIcon from '@/assets/icons/camera-focus-icon.svg';
-import useWindowSize from '@/common/hooks/useWindowSize';
+import { useWindowSize } from '@/common/hooks/useWindowSize';
 import React, { useRef, useState } from 'react';
 import Webcam from 'react-webcam';
 import Image from 'next/image';
+import { useScreenHeight } from '@/common/hooks/useScreenHeight';
 
 export interface WebCamProps {}
 
 export default function WebCam(props: WebCamProps) {
+  const heightVariant = useScreenHeight();
   const { width, height } = useWindowSize();
   const [imagePreview, setImagePreview] = useState('');
   const webcamRef = useRef<Webcam>(null);
@@ -23,16 +25,17 @@ export default function WebCam(props: WebCamProps) {
   }, [webcamRef]);
 
   return (
-    <div className="h-screen relative">
+    <div style={{ height: `var(${heightVariant})` }} className="relative">
       <Webcam
         audio={false}
         minScreenshotHeight={height}
         ref={webcamRef}
         screenshotFormat="image/jpeg"
         imageSmoothing
-        mirrored
+        // mirrored
         minScreenshotWidth={width}
         videoConstraints={videoConstraints}
+        screenshotQuality={1}
         style={{
           width: '100%',
           height: '100%',
@@ -43,8 +46,6 @@ export default function WebCam(props: WebCamProps) {
           objectPosition: 'center',
         }}
       />
-      {/* <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-black/80" /> */}
-      <CameraFocusIcon className="absolute top-36 left-1/2 -translate-x-1/2" />
       <CircleButton
         size={90}
         onClick={onCapture}

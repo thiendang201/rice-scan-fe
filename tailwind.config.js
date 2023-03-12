@@ -28,7 +28,13 @@ module.exports = {
       borderWidth: {
         6: '6px',
       },
+      dropShadow: {
+        normal: '0px 0px 0px rgb(0 0 0 / 50%)',
+      },
+      textShadow: {
+        normal: '0px 0px 1px rgb(0 0 0 / 50%), 0px 0px 1px rgb(1 0 5 / 10%)',
+      },
     },
   },
-  plugins: [],
+  plugins: [require('tailwindcss-textshadow')],
 };
