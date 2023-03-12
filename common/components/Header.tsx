@@ -24,7 +24,10 @@ export default function Header({ showBackButton = false, textDark = true }: Head
     >
       {showBackButton ? (
         <Button className="inline-block" onClick={onBack}>
-          <ArrowForward className={!textDark && 'text-white'} stroke="rgba(0,0,0,10%)" />
+          <ArrowForward
+            className={twMerge('rotate-180', !textDark && 'text-white')}
+            stroke="rgba(0,0,0,10%)"
+          />
         </Button>
       ) : (
         <div></div>

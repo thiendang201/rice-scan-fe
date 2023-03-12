@@ -1,33 +1,46 @@
 import CircleButton from '@/common/components/Button/CircleButton';
-import CameraFocusIcon from '@/assets/icons/camera-focus-icon.svg';
 import { useWindowSize } from '@/common/hooks/useWindowSize';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
 import Image from 'next/image';
 import { useScreenHeight } from '@/common/hooks/useScreenHeight';
+import { FacingMode } from '@/common/enums/common';
+import { useMobile } from '@/common/hooks/useMobile';
 
 export default function WebCam() {
+  const isMobile = useMobile();
   const heightVariant = useScreenHeight();
   const { width, height } = useWindowSize();
   const [imagePreview, setImagePreview] = useState('');
   const webcamRef = useRef<Webcam>(null);
+  const fullScreenRef = useRef<HTMLDivElement>(null);
+  const videoConstraints = {
+    facingMode: FacingMode.environment,
+  };
 
   const onCapture = React.useCallback(() => {
     const imageSrc = webcamRef.current?.getScreenshot();
     setImagePreview(imageSrc ?? '');
   }, [webcamRef]);
 
+  console.log('webcam');
+
+  useEffect(() => {
+    fullScreenRef.current?.requestFullscreen().catch((e) => {
+      console.log(e);
+    });
+    // console.log(navigator.userAgent, videoConstraints);
+  }, []);
+
   return (
-    <div style={{ height: `var(${heightVariant})` }} className="relative">
+    <div ref={fullScreenRef} style={{ height: `var(${heightVariant})` }} className="relative">
       <Webcam
         audio={false}
         ref={webcamRef}
         screenshotFormat="image/jpeg"
         imageSmoothing
-        mirrored
-        videoConstraints={{
-          facingMode: 'environment',
-        }}
+        mirrored={isMobile}
+        videoConstraints={videoConstraints}
         screenshotQuality={1}
         style={{
           width: '100%',
