@@ -28,13 +28,13 @@ export default function WebCam(props: WebCamProps) {
     <div style={{ height: `var(${heightVariant})` }} className="relative">
       <Webcam
         audio={false}
-        minScreenshotHeight={height}
+        // minScreenshotHeight={height}
         ref={webcamRef}
         screenshotFormat="image/jpeg"
         imageSmoothing
-        // mirrored
-        minScreenshotWidth={width}
-        videoConstraints={videoConstraints}
+        mirrored
+        // minScreenshotWidth={width}
+        // videoConstraints={videoConstraints}
         screenshotQuality={1}
         style={{
           width: '100%',
