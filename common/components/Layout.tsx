@@ -1,15 +1,14 @@
 import React, { ReactNode } from 'react';
-import Header from '@/common/components/Header';
+import Header, { HeaderProps } from '@/common/components/Header';
 
-interface LayoutProps {
+interface LayoutProps extends HeaderProps {
   children: ReactNode;
-  showBackButton?: boolean;
 }
 
-export default function Layout({ children, showBackButton = false }: LayoutProps) {
+export default function Layout({ children, ...props }: LayoutProps) {
   return (
     <div className="bg-background">
-      <Header showBackButton={showBackButton} />
+      <Header {...props} />
       <main>{children}</main>
     </div>
   );
