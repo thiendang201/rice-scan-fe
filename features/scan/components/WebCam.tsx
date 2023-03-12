@@ -6,18 +6,11 @@ import Webcam from 'react-webcam';
 import Image from 'next/image';
 import { useScreenHeight } from '@/common/hooks/useScreenHeight';
 
-export interface WebCamProps {}
-
-export default function WebCam(props: WebCamProps) {
+export default function WebCam() {
   const heightVariant = useScreenHeight();
   const { width, height } = useWindowSize();
   const [imagePreview, setImagePreview] = useState('');
   const webcamRef = useRef<Webcam>(null);
-  const videoConstraints = {
-    width,
-    height,
-    facingMode: 'user',
-  };
 
   const onCapture = React.useCallback(() => {
     const imageSrc = webcamRef.current?.getScreenshot();
@@ -28,13 +21,13 @@ export default function WebCam(props: WebCamProps) {
     <div style={{ height: `var(${heightVariant})` }} className="relative">
       <Webcam
         audio={false}
-        // minScreenshotHeight={height}
         ref={webcamRef}
         screenshotFormat="image/jpeg"
         imageSmoothing
         mirrored
-        // minScreenshotWidth={width}
-        // videoConstraints={videoConstraints}
+        videoConstraints={{
+          facingMode: 'environment',
+        }}
         screenshotQuality={1}
         style={{
           width: '100%',
