@@ -1,100 +1,35 @@
-import * as React from 'react';
-import HistoryItem, { HistoryItemProps } from '@/features/history/components/HistoryScanItem';
+import React, { useContext, useEffect, useRef } from 'react';
+import HistoryItem from '@/features/history/components/HistoryScanItem';
+import { LichSu } from '@/types/common';
+import { useRouter } from 'next/router';
+import { historyContext } from '@/features/history/contexts/HistoryContext';
 
-export interface HistoryScanListProps {
-  historyList: HistoryItemProps[];
-}
+export default function HistoryScanList() {
+  const { historyList } = useContext(historyContext);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const router = useRouter();
 
-export default function HistoryScanList({ historyList }: HistoryScanListProps) {
+  const onHistoryClick = (pestId: string) => () => router.push(`/pest/${pestId}/details`);
+
   const HistoryElementList = historyList.map((history) => (
-    <HistoryItem key={history.id} {...history} />
+    <HistoryItem
+      key={history.ma_lich_su}
+      {...history}
+      onClick={onHistoryClick(history.ma_sau_benh)}
+    />
   ));
 
   return (
     <div className="mt-12 pb-9 pt-6 bg-white z-10 relative">
-      <h2 className="font-bold px-7 text-base sticky top-0 left-0 w-full pt-6 pb-4 bg-white/80 backdrop-blur-md">
+      <h2
+        ref={headingRef}
+        className="font-bold px-7 text-base sticky top-0 left-0 w-full pt-6 pb-4 bg-white/80 backdrop-blur-md"
+      >
         Tải lên gần đây
       </h2>
       <div className="flex flex-col gap-6 px-7">
         {HistoryElementList}
-        <HistoryItem
-          id={'1'}
-          image_url={'https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg'}
-          date={'2020-12-02 13:21'}
-          disease_name={'Bệnh sâu đục thân'}
-        />
-        <HistoryItem
-          id={'1'}
-          image_url={'https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg'}
-          date={'2020-12-02 13:21'}
-          disease_name={'Bệnh sâu đục thân'}
-        />
-        <HistoryItem
-          id={'1'}
-          image_url={'https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg'}
-          date={'2020-12-02 13:21'}
-          disease_name={'Bệnh sâu đục thân'}
-        />
-        <HistoryItem
-          id={'1'}
-          image_url={'https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg'}
-          date={'2020-12-02 13:21'}
-          disease_name={'Bệnh sâu đục thân'}
-        />
-        <HistoryItem
-          id={'1'}
-          image_url={'https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg'}
-          date={'2020-12-02 13:21'}
-          disease_name={'Bệnh sâu đục thân'}
-        />
-        <HistoryItem
-          id={'1'}
-          image_url={'https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg'}
-          date={'2020-12-02 13:21'}
-          disease_name={'Bệnh sâu đục thân'}
-        />
-        <HistoryItem
-          id={'1'}
-          image_url={'https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg'}
-          date={'2020-12-02 13:21'}
-          disease_name={'Bệnh sâu đục thân'}
-        />
-        <HistoryItem
-          id={'1'}
-          image_url={'https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg'}
-          date={'2020-12-02 13:21'}
-          disease_name={'Bệnh sâu đục thân'}
-        />
-        <HistoryItem
-          id={'1'}
-          image_url={'https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg'}
-          date={'2020-12-02 13:21'}
-          disease_name={'Bệnh sâu đục thân'}
-        />
-        <HistoryItem
-          id={'1'}
-          image_url={'https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg'}
-          date={'2020-12-02 13:21'}
-          disease_name={'Bệnh sâu đục thân'}
-        />
-        <HistoryItem
-          id={'1'}
-          image_url={'https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg'}
-          date={'2020-12-02 13:21'}
-          disease_name={'Bệnh sâu đục thân'}
-        />
-        <HistoryItem
-          id={'1'}
-          image_url={'https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg'}
-          date={'2020-12-02 13:21'}
-          disease_name={'Bệnh sâu đục thân'}
-        />
-        <HistoryItem
-          id={'1'}
-          image_url={'https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg'}
-          date={'2020-12-02 13:21'}
-          disease_name={'Bệnh sâu đục thân'}
-        />
+        {!historyList.length && <h2 className="text-center mt-10">Trống!</h2>}
       </div>
     </div>
   );

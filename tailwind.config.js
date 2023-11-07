@@ -18,12 +18,18 @@ module.exports = {
       colors: {
         primary: {
           purple: '#7166F9',
+          green: '#63B995',
         },
+        toast: {
+          danger: '#F88087',
+        },
+        'light-purple': '#ECEBFF',
         'dark-blue': '#2B2F42',
         icon: '#9FA7D0',
         background: '#F6F6FB',
-        'light-blue-grey': '#DFE6EF',
-        'dark-blue-grey': '#D1DDEB',
+        'light-blue-gray': '#DFE6EF',
+        'dark-blue-gray': '#D1DDEB',
+        'border-gray': '#DBDEED',
       },
       borderWidth: {
         6: '6px',
